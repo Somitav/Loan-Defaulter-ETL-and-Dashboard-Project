@@ -1,0 +1,34 @@
+---creating reporting table --
+
+create table "loan_defaulter_rpt" (
+"id" varchar,
+"year" date ,
+"loan_limit" varchar ,
+"Gender" varchar ,
+"loan_type" varchar ,
+"loan_purpose" varchar ,
+"Business_or_commerical" varchar ,
+"loan_amount" float ,
+"rate_of_interest" float ,
+"upfront_charge" float ,
+"property_value" float ,
+"occupancy_type" varchar ,
+"Income" float ,
+"credit_type" varchar ,
+"credit_score" int ,
+"co_applicant_credit_type" varchar ,
+"age" varchar ,
+"LTV" FLOAT ,
+"Region" varchar ,
+"Status" varchar ,
+"Loan-to-Value Ratio" float ,
+"Upfront_Ratio" float ,
+"credit_category" varchar) ;
+
+-- validating -- 
+
+-- validating loan amount from stg to rpt--
+select sum("loan_amount") from loan_defaulter_rpt ;
+
+-- validating number of records from staging to rpt --
+select count("id") from loan_defaulter_rpt ;
