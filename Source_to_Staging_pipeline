@@ -1,0 +1,305 @@
+{
+    "name": "source_to_stg",
+    "properties": {
+        "activities": [
+            {
+                "name": "sc-to-stg",
+                "type": "Copy",
+                "dependsOn": [],
+                "policy": {
+                    "timeout": "0.12:00:00",
+                    "retry": 0,
+                    "retryIntervalInSeconds": 30,
+                    "secureOutput": false,
+                    "secureInput": false
+                },
+                "userProperties": [],
+                "typeProperties": {
+                    "source": {
+                        "type": "DelimitedTextSource",
+                        "storeSettings": {
+                            "type": "AzureBlobStorageReadSettings",
+                            "recursive": true,
+                            "enablePartitionDiscovery": false
+                        },
+                        "formatSettings": {
+                            "type": "DelimitedTextReadSettings"
+                        }
+                    },
+                    "sink": {
+                        "type": "AzurePostgreSQLSink",
+                        "writeBatchSize": 1000000,
+                        "writeBatchTimeout": "00:30:00",
+                        "writeMethod": "CopyCommand"
+                    },
+                    "enableStaging": false,
+                    "translator": {
+                        "type": "TabularTranslator",
+                        "mappings": [
+                            {
+                                "source": {
+                                    "name": "ID",
+                                    "type": "String",
+                                    "physicalType": "String"
+                                },
+                                "sink": {
+                                    "name": "id",
+                                    "type": "String",
+                                    "physicalType": "character varying"
+                                }
+                            },
+                            {
+                                "source": {
+                                    "name": "year",
+                                    "type": "String",
+                                    "physicalType": "String"
+                                },
+                                "sink": {
+                                    "name": "year",
+                                    "type": "String",
+                                    "physicalType": "character varying"
+                                }
+                            },
+                            {
+                                "source": {
+                                    "name": "loan_limit",
+                                    "type": "String",
+                                    "physicalType": "String"
+                                },
+                                "sink": {
+                                    "name": "loan_limit",
+                                    "type": "String",
+                                    "physicalType": "character varying"
+                                }
+                            },
+                            {
+                                "source": {
+                                    "name": "Gender",
+                                    "type": "String",
+                                    "physicalType": "String"
+                                },
+                                "sink": {
+                                    "name": "Gender",
+                                    "type": "String",
+                                    "physicalType": "character varying"
+                                }
+                            },
+                            {
+                                "source": {
+                                    "name": "loan_type",
+                                    "type": "String",
+                                    "physicalType": "String"
+                                },
+                                "sink": {
+                                    "name": "loan_type",
+                                    "type": "String",
+                                    "physicalType": "character varying"
+                                }
+                            },
+                            {
+                                "source": {
+                                    "name": "loan_purpose",
+                                    "type": "String",
+                                    "physicalType": "String"
+                                },
+                                "sink": {
+                                    "name": "loan_purpose",
+                                    "type": "String",
+                                    "physicalType": "character varying"
+                                }
+                            },
+                            {
+                                "source": {
+                                    "name": "business_or_commercial",
+                                    "type": "String",
+                                    "physicalType": "String"
+                                },
+                                "sink": {
+                                    "name": "Business_or_commerical",
+                                    "type": "String",
+                                    "physicalType": "character varying"
+                                }
+                            },
+                            {
+                                "source": {
+                                    "name": "loan_amount",
+                                    "type": "String",
+                                    "physicalType": "String"
+                                },
+                                "sink": {
+                                    "name": "loan_amount",
+                                    "type": "Double",
+                                    "physicalType": "double precision"
+                                }
+                            },
+                            {
+                                "source": {
+                                    "name": "rate_of_interest",
+                                    "type": "String",
+                                    "physicalType": "String"
+                                },
+                                "sink": {
+                                    "name": "rate_of_interest",
+                                    "type": "Double",
+                                    "physicalType": "double precision"
+                                }
+                            },
+                            {
+                                "source": {
+                                    "name": "Upfront_charges",
+                                    "type": "String",
+                                    "physicalType": "String"
+                                },
+                                "sink": {
+                                    "name": "upfront_charge",
+                                    "type": "Double",
+                                    "physicalType": "double precision"
+                                }
+                            },
+                            {
+                                "source": {
+                                    "name": "property_value",
+                                    "type": "String",
+                                    "physicalType": "String"
+                                },
+                                "sink": {
+                                    "name": "property_value",
+                                    "type": "Double",
+                                    "physicalType": "double precision"
+                                }
+                            },
+                            {
+                                "source": {
+                                    "name": "occupancy_type",
+                                    "type": "String",
+                                    "physicalType": "String"
+                                },
+                                "sink": {
+                                    "name": "occupancy_type",
+                                    "type": "String",
+                                    "physicalType": "character varying"
+                                }
+                            },
+                            {
+                                "source": {
+                                    "name": "income",
+                                    "type": "String",
+                                    "physicalType": "String"
+                                },
+                                "sink": {
+                                    "name": "Income",
+                                    "type": "Double",
+                                    "physicalType": "double precision"
+                                }
+                            },
+                            {
+                                "source": {
+                                    "name": "credit_type",
+                                    "type": "String",
+                                    "physicalType": "String"
+                                },
+                                "sink": {
+                                    "name": "credit_type",
+                                    "type": "String",
+                                    "physicalType": "character varying"
+                                }
+                            },
+                            {
+                                "source": {
+                                    "name": "Credit_Score",
+                                    "type": "String",
+                                    "physicalType": "String"
+                                },
+                                "sink": {
+                                    "name": "credit_score",
+                                    "type": "Int32",
+                                    "physicalType": "integer"
+                                }
+                            },
+                            {
+                                "source": {
+                                    "name": "co-applicant_credit_type",
+                                    "type": "String",
+                                    "physicalType": "String"
+                                },
+                                "sink": {
+                                    "name": "co_applicant_credit_type",
+                                    "type": "String",
+                                    "physicalType": "character varying"
+                                }
+                            },
+                            {
+                                "source": {
+                                    "name": "age",
+                                    "type": "String",
+                                    "physicalType": "String"
+                                },
+                                "sink": {
+                                    "name": "age",
+                                    "type": "String",
+                                    "physicalType": "character varying"
+                                }
+                            },
+                            {
+                                "source": {
+                                    "name": "LTV",
+                                    "type": "String",
+                                    "physicalType": "String"
+                                },
+                                "sink": {
+                                    "name": "LTV",
+                                    "type": "Double",
+                                    "physicalType": "double precision"
+                                }
+                            },
+                            {
+                                "source": {
+                                    "name": "Region",
+                                    "type": "String",
+                                    "physicalType": "String"
+                                },
+                                "sink": {
+                                    "name": "Region",
+                                    "type": "String",
+                                    "physicalType": "character varying"
+                                }
+                            },
+                            {
+                                "source": {
+                                    "name": "Status",
+                                    "type": "String",
+                                    "physicalType": "String"
+                                },
+                                "sink": {
+                                    "name": "Status",
+                                    "type": "String",
+                                    "physicalType": "character varying"
+                                }
+                            }
+                        ],
+                        "typeConversion": true,
+                        "typeConversionSettings": {
+                            "allowDataTruncation": true,
+                            "treatBooleanAsNumber": false
+                        }
+                    }
+                },
+                "inputs": [
+                    {
+                        "referenceName": "source_blob_csv",
+                        "type": "DatasetReference"
+                    }
+                ],
+                "outputs": [
+                    {
+                        "referenceName": "AzurePostgreSql_stg",
+                        "type": "DatasetReference"
+                    }
+                ]
+            }
+        ],
+        "annotations": [],
+        "lastPublishTime": "2025-04-22T06:44:21Z"
+    },
+    "type": "Microsoft.DataFactory/factories/pipelines"
+}

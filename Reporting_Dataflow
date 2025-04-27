@@ -1,0 +1,130 @@
+{
+    "name": "dataflow1",
+    "properties": {
+        "type": "MappingDataFlow",
+        "typeProperties": {
+            "sources": [
+                {
+                    "dataset": {
+                        "referenceName": "AzurePostgreSql_stg",
+                        "type": "DatasetReference"
+                    },
+                    "name": "STG"
+                }
+            ],
+            "sinks": [
+                {
+                    "dataset": {
+                        "referenceName": "PG_RPT",
+                        "type": "DatasetReference"
+                    },
+                    "name": "RPT",
+                    "rejectedDataLinkedService": {
+                        "referenceName": "AzureBlobStorage",
+                        "type": "LinkedServiceReference"
+                    }
+                }
+            ],
+            "transformations": [
+                {
+                    "name": "Transformation"
+                }
+            ],
+            "scriptLines": [
+                "source(output(",
+                "          id as string,",
+                "          year as string,",
+                "          loan_limit as string,",
+                "          Gender as string,",
+                "          loan_type as string,",
+                "          loan_purpose as string,",
+                "          Business_or_commerical as string,",
+                "          loan_amount as double,",
+                "          rate_of_interest as double,",
+                "          upfront_charge as double,",
+                "          property_value as double,",
+                "          occupancy_type as string,",
+                "          Income as double,",
+                "          credit_type as string,",
+                "          credit_score as integer,",
+                "          co_applicant_credit_type as string,",
+                "          age as string,",
+                "          LTV as double,",
+                "          Region as string,",
+                "          Status as string",
+                "     ),",
+                "     allowSchemaDrift: true,",
+                "     validateSchema: false,",
+                "     isolationLevel: 'READ_UNCOMMITTED',",
+                "     format: 'table') ~> STG",
+                "STG derive(Debt_to_Income_Ratio = round(loan_amount/Income,2),",
+                "          {Loan-to-Value Ratio} = round(loan_amount/property_value,2)*100,",
+                "          Upfront_Ratio = upfront_charge/loan_amount,",
+                "          credit_category = case(credit_score>=750,\"Excellent\",case(credit_score>=700,'Good', case(credit_score>=650, 'Fair','Poor'))),",
+                "          year = toDate(year)) ~> Transformation",
+                "Transformation sink(allowSchemaDrift: true,",
+                "     validateSchema: false,",
+                "     input(",
+                "          id as string,",
+                "          year as date,",
+                "          loan_limit as string,",
+                "          Gender as string,",
+                "          loan_type as string,",
+                "          loan_purpose as string,",
+                "          Business_or_commerical as string,",
+                "          loan_amount as double,",
+                "          rate_of_interest as double,",
+                "          upfront_charge as double,",
+                "          property_value as double,",
+                "          occupancy_type as string,",
+                "          Income as double,",
+                "          credit_type as string,",
+                "          credit_score as integer,",
+                "          co_applicant_credit_type as string,",
+                "          age as string,",
+                "          LTV as double,",
+                "          Region as string,",
+                "          Status as string,",
+                "          Debt_to_Income_Ratio as double,",
+                "          {Loan-to-Value Ratio} as double,",
+                "          Upfront_Ratio as double,",
+                "          credit_category as string",
+                "     ),",
+                "     deletable:false,",
+                "     insertable:true,",
+                "     updateable:false,",
+                "     upsertable:false,",
+                "     truncate:true,",
+                "     format: 'table',",
+                "     skipDuplicateMapInputs: true,",
+                "     skipDuplicateMapOutputs: true,",
+                "     mapColumn(",
+                "          id,",
+                "          year,",
+                "          loan_limit,",
+                "          Gender,",
+                "          loan_type,",
+                "          loan_purpose,",
+                "          Business_or_commerical,",
+                "          loan_amount,",
+                "          rate_of_interest,",
+                "          upfront_charge,",
+                "          property_value,",
+                "          occupancy_type,",
+                "          Income,",
+                "          credit_type,",
+                "          credit_score,",
+                "          co_applicant_credit_type,",
+                "          age,",
+                "          LTV,",
+                "          Region,",
+                "          Status,",
+                "          Debt_to_Income_Ratio,",
+                "          {Loan-to-Value Ratio},",
+                "          Upfront_Ratio,",
+                "          credit_category",
+                "     )) ~> RPT"
+            ]
+        }
+    }
+}
