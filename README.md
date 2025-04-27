@@ -1,4 +1,6 @@
 Loan Defaulter ETL and Dashboard Project
+
+
 🚀 Project Overview
 This project focuses on building a complete end-to-end ETL pipeline and interactive reporting dashboard for loan defaulter analysis.
 It covers data ingestion, transformation, storage, and visualization using Azure Data Factory, PostgreSQL, and Power BI.
